@@ -135,12 +135,21 @@ body{font-family:'Fredoka One','Arial Black',sans-serif;user-select:none;overflo
 .boss-bar-fill{height:100%;background:linear-gradient(90deg,#ff1744,#ff6d00);border-radius:10px;transition:width .2s;}
 
 /* Grid */
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:20px;background:linear-gradient(to bottom,#3e2723,#4e342e);border-radius:22px;border:4px solid #1a0a00;box-shadow:0 8px 32px rgba(0,0,0,.6);}
-.hole{width:118px;height:118px;background:radial-gradient(ellipse at 50% 80%,#0d0500 55%,#2a1000 100%);border-radius:50%;position:relative;overflow:hidden;border:4px solid #0a0300;box-shadow:inset 0 10px 22px rgba(0,0,0,.9);}
-.hole.inactive{background:radial-gradient(ellipse at 50%50%,#1a0a00,#0d0500);filter:brightness(.4);}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:26px;background:radial-gradient(ellipse at 50% 20%,#72d152,#3da82a);border-radius:28px;border:5px solid #2a8018;box-shadow:0 10px 30px rgba(0,0,0,.45),inset 0 3px 8px rgba(255,255,255,.18),inset 0 -4px 10px rgba(0,0,0,.2);}
+.hole{width:118px;height:118px;background:radial-gradient(ellipse at 50% 30%,#7a4010 0%,#3a1800 35%,#0d0500 70%,#000 100%);border-radius:50%;position:relative;overflow:hidden;border:6px solid #1e5c10;box-shadow:inset 0 12px 28px rgba(0,0,0,.85),inset 0 -3px 8px rgba(0,0,0,.5),0 4px 6px rgba(0,0,0,.35);}
+.hole.inactive{background:radial-gradient(ellipse at 50%50%,#2a7018,#1a4a0a);filter:brightness(.55);border-color:#1a4a0a;}
 
 /* Mole */
-.mole{position:absolute;bottom:-115%;left:50%;transform:translateX(-50%);width:86px;cursor:pointer;transition:bottom .15s ease-out;}
+.mole{position:absolute;bottom:-115%;left:50%;transform:translateX(-50%);width:86px;cursor:none;transition:bottom .15s ease-out;}
+
+/* ── Hit word pop ── */
+.hit-word{position:fixed;pointer-events:none;z-index:999;font-family:'Fredoka One',sans-serif;font-size:2.6rem;font-weight:900;text-shadow:3px 3px 0 #000,-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000;transform:translate(-50%,-50%);animation:hitWordPop .75s ease-out forwards;white-space:nowrap;}
+@keyframes hitWordPop{
+  0%  {opacity:1;transform:translate(-50%,-50%) scale(.4) rotate(-10deg);}
+  25% {opacity:1;transform:translate(-50%,-80%) scale(1.5) rotate(6deg);}
+  60% {opacity:1;transform:translate(-50%,-110%) scale(1.1) rotate(-3deg);}
+  100%{opacity:0;transform:translate(-50%,-150%) scale(.9) rotate(2deg);}
+}
 .mole.up{bottom:1%;}
 .mole.whacked{bottom:-115%;transition:bottom .08s ease-in;}
 .mole.whacked .mole-head{animation:squish .18s ease-out;}
@@ -171,9 +180,62 @@ body{font-family:'Fredoka One','Arial Black',sans-serif;user-select:none;overflo
 .result-title{font-size:2.8rem;margin-bottom:8px;}
 .result-score{font-size:4rem;color:#1e88e5;text-shadow:2px 2px 0 #000;}
 .result-msg{font-size:1.1rem;color:#444;margin:10px 0 22px;}
+
+/* ── Quest Button ── */
+.quest-fab{position:fixed;top:16px;left:16px;z-index:50;background:#fdd835;border:3px solid #000;border-radius:50px;padding:8px 16px;font-family:'Fredoka One',sans-serif;font-size:1rem;font-weight:900;cursor:pointer;box-shadow:3px 3px 0 #000;transition:transform .1s,box-shadow .1s;display:flex;align-items:center;gap:6px;}
+.quest-fab:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 #000;}
+.quest-fab .q-badge{background:#e53935;color:#fff;border-radius:50%;width:20px;height:20px;font-size:.75rem;display:flex;align-items:center;justify-content:center;display:none;}
+.quest-fab .q-badge.show{display:flex;}
+
+/* ── Quest Panel ── */
+.quest-panel{position:fixed;top:0;left:0;width:100%;height:100%;z-index:100;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);}
+.quest-panel.hidden{display:none;}
+.qp-box{background:linear-gradient(to bottom,#fffde7,#fff9c4);border:4px solid #000;border-radius:24px;padding:28px 32px;max-width:420px;width:90%;box-shadow:8px 8px 0 #000;}
+.qp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.qp-title{font-size:1.6rem;color:#1a1a1a;}
+.qp-close{background:none;border:none;font-size:1.8rem;cursor:pointer;line-height:1;padding:0;}
+.qp-timer{font-size:.85rem;color:#666;margin-bottom:16px;text-align:center;}
+.qp-timer span{color:#e53935;font-weight:900;}
+.quest-card{background:#fff;border:3px solid #000;border-radius:16px;padding:14px 16px;margin-bottom:12px;box-shadow:3px 3px 0 #000;}
+.quest-card.done{background:#f1f8e9;border-color:#43a047;}
+.qc-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.qc-icon{font-size:1.6rem;line-height:1;}
+.qc-info{flex:1;}
+.qc-label{font-size:1rem;color:#1a1a1a;line-height:1.2;}
+.qc-reward{font-size:.78rem;color:#ff6d00;}
+.qc-check{font-size:1.4rem;}
+.qp-bar-bg{height:12px;background:#e0e0e0;border-radius:8px;border:1.5px solid #bbb;overflow:hidden;}
+.qp-bar-fill{height:100%;background:linear-gradient(90deg,#43a047,#76ff03);border-radius:8px;transition:width .4s ease;}
+.quest-card.done .qp-bar-fill{background:linear-gradient(90deg,#43a047,#a5d6a7);}
+.qc-frac{font-size:.78rem;color:#666;text-align:right;margin-top:3px;}
+.qp-pts{text-align:center;font-size:.9rem;color:#555;margin-top:4px;}
+.qp-pts span{color:#e53935;font-size:1.1rem;}
+
+/* ── Quest complete toast ── */
+.q-toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:#43a047;color:#fff;border:3px solid #000;border-radius:16px;padding:12px 28px;font-family:'Fredoka One',sans-serif;font-size:1.1rem;box-shadow:4px 4px 0 #000;z-index:200;transition:transform .35s ease,opacity .35s ease;opacity:0;text-align:center;}
+.q-toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 </style>
 </head>
 <body>
+
+<!-- Quest FAB -->
+<button class="quest-fab" onclick="openQuests()">📋 Quests <span class="q-badge" id="q-badge">0</span></button>
+
+<!-- Quest Panel -->
+<div class="quest-panel hidden" id="quest-panel">
+  <div class="qp-box">
+    <div class="qp-head">
+      <div class="qp-title">📋 Hourly Quests</div>
+      <button class="qp-close" onclick="closeQuests()">✕</button>
+    </div>
+    <div class="qp-timer">Resets in <span id="q-timer-txt">—</span></div>
+    <div id="quest-list"></div>
+    <div class="qp-pts">Quest XP earned: <span id="q-total-pts">0</span> ⭐</div>
+  </div>
+</div>
+
+<!-- Quest toast -->
+<div class="q-toast" id="q-toast"></div>
 
 <!-- Farm background -->
 <div class="farm-bg">
@@ -535,7 +597,7 @@ function whack(e,idx){
     mole.classList.add('boss-mole','hit-flash');
     setTimeout(()=>{mole.classList.remove('boss-mole','hit-flash','up');},300);
     updateBossBar();
-    playBossHit();
+    playBossHit();showHitWord(e,false);
     if(bossHP<=0){endGame(true);}
     return;
   }
@@ -547,8 +609,11 @@ function whack(e,idx){
   const burst=mole.querySelector('.mole-burst');
   burst.textContent=streak>=2?`⚡+${pts}`:`+1`;
   burst.style.color=streak>=2?'#ff6d00':'#fdd835';
-  if(streak===2){showCombo();playCombo();}
-  else{playWhack();}
+  if(streak===2){showCombo();playCombo();showHitWord(e,true);updateQuest('combos');}
+  else{playWhack();showHitWord(e,false);}
+  updateQuest('moles');
+  updateQuest('score',pts);
+  updateQuestStreak(streak);
   if(gameMode==='story'&&!isBoss){
     const q=window._quota;
     quotaEl().textContent=`${score}/${q}`;
@@ -646,6 +711,202 @@ async function playCutscene(){
 /* ══ FENCE POSTS ══ */
 const fr=document.getElementById('fence-row');
 for(let i=0;i<28;i++){const p=document.createElement('div');p.className='fp';fr.appendChild(p);}
+
+/* ══ HAMMER CURSOR ══ */
+const hammerSVG=`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <g transform="rotate(-40,20,20)">
+    <rect x="17" y="10" width="7" height="24" rx="3" fill="#8B4513" stroke="#4a2200" stroke-width="1.5"/>
+    <rect x="5" y="3" width="26" height="14" rx="4" fill="#9e9e9e" stroke="#333" stroke-width="2"/>
+    <rect x="7" y="5" width="22" height="5" rx="2" fill="rgba(255,255,255,0.35)"/>
+    <rect x="5" y="13" width="26" height="4" rx="0" fill="#757575" stroke="none"/>
+  </g>
+</svg>`;
+const hammerURL=`url("data:image/svg+xml,${encodeURIComponent(hammerSVG)}")`;
+const hammerCursor=`${hammerURL} 8 8, none`;
+document.body.style.cursor=hammerCursor;
+// Also apply to holes/moles via a style rule
+const cursorStyle=document.createElement('style');
+cursorStyle.textContent=`.hole,.mole,.big-btn{cursor:${hammerCursor}!important;}`;
+document.head.appendChild(cursorStyle);
+
+/* ══ HIT WORD EFFECT ══ */
+const HIT_WORDS=['SMACK!','BONK!','POW!','WHAM!','ZAP!','THWACK!'];
+const HIT_COLORS=['#ff1744','#ff6d00','#ffd600','#e040fb','#00e5ff','#76ff03'];
+function showHitWord(e,isCombo){
+  const el=document.createElement('div');
+  el.className='hit-word';
+  el.textContent=isCombo?'COMBO!':HIT_WORDS[Math.floor(Math.random()*HIT_WORDS.length)];
+  el.style.color=isCombo?'#ffd600':HIT_COLORS[Math.floor(Math.random()*HIT_COLORS.length)];
+  el.style.left=e.clientX+'px';
+  el.style.top=e.clientY+'px';
+  el.style.fontSize=isCombo?'3.2rem':'2.6rem';
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),800);
+}
+
+/* ══ QUEST SYSTEM ══ */
+const QUEST_POOL=[
+  {id:'q_whack20', label:'Whack 20 moles',          icon:'🐭', type:'moles',  target:20,  pts:30},
+  {id:'q_whack40', label:'Whack 40 moles',          icon:'🔨', type:'moles',  target:40,  pts:60},
+  {id:'q_combo5',  label:'Get 5 combos',            icon:'⚡', type:'combos', target:5,   pts:40},
+  {id:'q_combo10', label:'Get 10 combos',           icon:'🔥', type:'combos', target:10,  pts:75},
+  {id:'q_story3',  label:'Clear 3 story levels',    icon:'📖', type:'levels', target:3,   pts:50},
+  {id:'q_story5',  label:'Clear 5 story levels',    icon:'⭐', type:'levels', target:5,   pts:100},
+  {id:'q_streak8', label:'Get an 8-hit streak',     icon:'💥', type:'streak', target:8,   pts:45},
+  {id:'q_score50', label:'Score 50 points total',   icon:'🎯', type:'score',  target:50,  pts:35},
+  {id:'q_score100',label:'Score 100 points total',  icon:'💎', type:'score',  target:100, pts:70},
+  {id:'q_arcade3', label:'Play 3 arcade games',     icon:'🕹️',type:'games',  target:3,   pts:30},
+  {id:'q_boss',    label:'Defeat King Mole',        icon:'👑', type:'boss',   target:1,   pts:120},
+  {id:'q_hard',    label:'Win a game on Hard mode', icon:'😈', type:'hard',   target:1,   pts:90},
+];
+const HOUR=3600000;
+let qs={active:[],progress:{},completed:[],resetAt:0,totalPts:0};
+
+function loadQuests(){
+  try{const raw=localStorage.getItem('wam_quests');if(raw)qs=JSON.parse(raw);}catch(e){}
+  const now=Date.now();
+  if(!qs.resetAt||now>=qs.resetAt){
+    pickNewQuests();
+  }
+  renderQuests();
+  setInterval(()=>{renderQuestTimer();},1000);
+}
+
+function pickNewQuests(){
+  const pool=[...QUEST_POOL];
+  const picked=[];
+  while(picked.length<3&&pool.length){
+    const i=Math.floor(Math.random()*pool.length);
+    picked.push(pool.splice(i,1)[0].id);
+  }
+  qs.active=picked;
+  qs.progress={};
+  qs.completed=[];
+  qs.resetAt=Date.now()+HOUR;
+  saveQuests();
+}
+
+function saveQuests(){localStorage.setItem('wam_quests',JSON.stringify(qs));}
+
+function updateQuest(type,amount=1){
+  let changed=false;
+  qs.active.forEach(id=>{
+    if(qs.completed.includes(id))return;
+    const def=QUEST_POOL.find(q=>q.id===id);
+    if(!def||def.type!==type)return;
+    qs.progress[id]=(qs.progress[id]||0)+amount;
+    if(qs.progress[id]>=def.target){
+      qs.progress[id]=def.target;
+      qs.completed.push(id);
+      qs.totalPts=(qs.totalPts||0)+def.pts;
+      showQuestToast(def);
+    }
+    changed=true;
+  });
+  if(changed){saveQuests();renderQuests();}
+  // Update badge
+  const remaining=qs.active.filter(id=>!qs.completed.includes(id)).length;
+  const badge=document.getElementById('q-badge');
+  const done=qs.active.length-remaining;
+  if(done>0){badge.textContent=done;badge.classList.add('show');}
+}
+
+function showQuestToast(def){
+  const t=document.getElementById('q-toast');
+  t.textContent=`✅ Quest done: ${def.label} (+${def.pts} ⭐)`;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+function renderQuests(){
+  const list=document.getElementById('quest-list');
+  if(!list)return;
+  const allDone=qs.active.length>0&&qs.active.every(id=>qs.completed.includes(id));
+  if(allDone){
+    list.innerHTML=`<div style="text-align:center;padding:24px 0;font-size:1.1rem;color:#43a047;">
+      🎉 All quests complete!<br><span style="font-size:.9rem;color:#666;">Come back in <strong id="q-timer-done">—</strong> for new quests!</span></div>`;
+    renderQuestTimer();
+    document.getElementById('q-total-pts').textContent=qs.totalPts||0;
+    return;
+  }
+  list.innerHTML=qs.active.map(id=>{
+    const def=QUEST_POOL.find(q=>q.id===id);
+    if(!def)return'';
+    const prog=qs.progress[id]||0;
+    const done=qs.completed.includes(id);
+    const pct=Math.min(100,Math.round((prog/def.target)*100));
+    return`<div class="quest-card${done?' done':''}">
+      <div class="qc-top">
+        <div class="qc-icon">${def.icon}</div>
+        <div class="qc-info">
+          <div class="qc-label">${def.label}</div>
+          <div class="qc-reward">+${def.pts} ⭐ on complete</div>
+        </div>
+        <div class="qc-check">${done?'✅':'🔲'}</div>
+      </div>
+      <div class="qp-bar-bg"><div class="qp-bar-fill" style="width:${pct}%"></div></div>
+      <div class="qc-frac">${done?'Done!':prog+' / '+def.target}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('q-total-pts').textContent=qs.totalPts||0;
+  renderQuestTimer();
+}
+
+function renderQuestTimer(){
+  const ms=Math.max(0,qs.resetAt-Date.now());
+  const m=Math.floor(ms/60000),s=Math.floor((ms%60000)/1000);
+  const txt=`${m}m ${s.toString().padStart(2,'0')}s`;
+  const el=document.getElementById('q-timer-txt');
+  const el2=document.getElementById('q-timer-done');
+  if(el)el.textContent=txt;
+  if(el2)el2.textContent=txt;
+  if(ms===0){pickNewQuests();renderQuests();}
+}
+
+function openQuests(){document.getElementById('quest-panel').classList.remove('hidden');renderQuests();}
+function closeQuests(){document.getElementById('quest-panel').classList.add('hidden');}
+
+// ── Extra quest helpers ──
+function updateQuestStreak(val){
+  // Streak quests use max-value logic (not cumulative)
+  let changed=false;
+  qs.active.forEach(id=>{
+    if(qs.completed.includes(id))return;
+    const def=QUEST_POOL.find(q=>q.id===id);
+    if(!def||def.type!=='streak')return;
+    const prev=qs.progress[id]||0;
+    if(val>prev){
+      qs.progress[id]=val;
+      if(val>=def.target){
+        qs.completed.push(id);
+        qs.totalPts=(qs.totalPts||0)+def.pts;
+        showQuestToast(def);
+      }
+      changed=true;
+    }
+  });
+  if(changed){saveQuests();renderQuests();}
+}
+
+// Wrap endGame to fire quest events for games/boss/hard
+const _origEndGame=endGame;
+endGame=function(win){
+  if(win&&gameMode==='arcade'){
+    updateQuest('games');
+    if(difficulty==='hard')updateQuest('hard');
+  }
+  if(win&&isBoss)updateQuest('boss');
+  _origEndGame(win);
+};
+
+// Wrap nextLevel to count cleared story levels
+const _origNextLevel=nextLevel;
+nextLevel=function(){
+  updateQuest('levels');
+  _origNextLevel();
+};
+
+loadQuests();
 </script>
 </body>
 </html>
